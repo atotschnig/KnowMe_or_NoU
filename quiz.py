@@ -17,6 +17,13 @@ def list_topics(questions):
             topics.append(t)
     return topics
 
+def shortlist(questions, topic_wanted):
+    shortlisted = []
+    for q in questions:
+        if topic_wanted == q['topic']:
+            shortlisted.append(q)
+    return shortlisted
+
 ################################################################################
 
 
@@ -26,15 +33,21 @@ with open(filename) as json_file:
     questions = json.load(json_file)
 
 topics = list_topics(questions)
-print("The available topics are:" , topics)          
-topic_wanted = input("Enter the topic you want: ")
+print("The available topics are:" , topics)
+valid = False
+while not valid:
+    topic_wanted = input("Enter the topic you want: ")
+    valid = (topic_wanted in topics)
+    if not valid:
+        print("OOPS, couldn't find this topic! Re-enter topic name")
+shortlisted = shortlist(questions, topic_wanted)
 
 num_q = len(questions)
 num_q_game = 3
 score = 0
 
 for index_q in range(num_q_game):
-    q = random.choice(questions)
+    q = random.choice(shortlisted)
     print(q['question'])
     for index_a in range(4):
         print(str(index_a + 1) + '. ' + q['answer' + str(index_a + 1)])
