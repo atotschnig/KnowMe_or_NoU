@@ -1,10 +1,33 @@
 import json
 import random
+#Title: BostonHacks2019
+#Contributers: Agnes Totschnig, Saumyaa Verma 
+
+
+################################################################################
+
+def list_topics(questions):
+    ''' takes in the database and returns a list of all the topics
+        contained in it
+    '''
+    topics = []
+    for q in questions:
+        t = q['topic']
+        if t not in topics:
+            topics.append(t)
+    return topics
+
+################################################################################
+
 
 filename = input("Enter file name: ") + '.json'
 
 with open(filename) as json_file:
     questions = json.load(json_file)
+
+topics = list_topics(questions)
+print("The available topics are:" , topics)          
+topic_wanted = input("Enter the topic you want: ")
 
 num_q = len(questions)
 num_q_game = 3
