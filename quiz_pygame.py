@@ -120,6 +120,7 @@ while not done:
         clear_with_title()
         
         q = random.choice(shortlisted)
+        shortlisted.pop(shortlisted.index(q))
         print(q['question'])
         for index_a in range(4):
             print(str(index_a + 1) + '. ' + q['answer' + str(index_a + 1)])
