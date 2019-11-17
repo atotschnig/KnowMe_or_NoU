@@ -103,8 +103,12 @@ while not done:
             done = True
         if waiting and event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                new = True
-                waiting = False
+                if counter == num_q_game:
+                    print("Your score is:",  score)
+                    done = True
+                else:
+                    new = True
+                    waiting = False
 
     if new:
         clear_with_title()
@@ -149,9 +153,6 @@ while not done:
             image = pygame.image.load('arrow.png')
             image = pygame.transform.scale(image, (70, 70))
             screen.blit(image, (120, 290 + 75*(correct-1)))  
-        if counter == num_q_game:
-            print("Your score is:",  score)
-            done = True
         end = False
         waiting = True
         
