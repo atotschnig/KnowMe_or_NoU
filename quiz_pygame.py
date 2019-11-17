@@ -95,6 +95,7 @@ score = 0
 new = True
 end = False
 waiting = False
+final = False
 counter = 0
 
 while not done:
@@ -103,9 +104,14 @@ while not done:
             done = True
         if waiting and event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                if counter == num_q_game:
-                    print("Your score is:",  score)
+                if final:
                     done = True
+                elif counter == num_q_game:
+                    print("Your score is:",  score)
+                    final = True
+                    clear_with_title()
+                    text = font.render('Your score is ' + str(score) + '.', True, (0,0,0))
+                    screen.blit(text, (200,300))
                 else:
                     new = True
                     waiting = False
@@ -158,12 +164,6 @@ while not done:
         
     pygame.display.flip()
 
-'''clear_with_title()
-text = font.render('Your score is ' + str(score), True, (0,0,0))
-screen.blit(text, (200,450))
-pygame.display.flip()
-
-time.sleep(5)'''
     
 pygame.quit()
 
