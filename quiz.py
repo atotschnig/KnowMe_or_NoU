@@ -98,4 +98,3 @@ for index_q in range(num_q_game):
     else:
         print("Wrong answer! :(")
 print("Your score is:",  score)
-
