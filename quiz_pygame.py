@@ -5,6 +5,7 @@ import json
 import random
 import serial
 import pygame
+import time
 
 colours = [(255,0,0), (255,255,0), (0,0,255), (0,255,0)]
 
@@ -92,12 +93,18 @@ num_q = len(questions)
 num_q_game = 3
 score = 0
 new = True
+end = False
+waiting = False
 counter = 0
 
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
+        if waiting and event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                new = True
+                waiting = False
 
     if new:
         clear_with_title()
@@ -116,29 +123,46 @@ while not done:
 
         correct, guess = 0, 0
         answered1, answered2 = False, False
+        new = False
 
-    
-    buttons = getLatestStatus()
-    if not answered1:
-        answered1, correct = check_answer(buttons[0:4])
-    if not answered2:
-        answered2, guess = check_answer(buttons[4:8])
-    new = (answered1 and answered2)
+    if not waiting:
+        buttons = getLatestStatus()
+        if not answered1:
+            answered1, correct = check_answer(buttons[0:4])
+        if not answered2:
+            answered2, guess = check_answer(buttons[4:8])
+        end = (answered1 and answered2)
 
-    if new:
+    if end:
         counter += 1
-        if counter == num_q_game:
-            done = True
-        
         if guess == correct:
             score += 1
             print("Correct answer! :D")
+            image = pygame.image.load('tick.png')
+            image = pygame.transform.scale(image, (70, 70))
+            screen.blit(image, (120, 290 + 75*(correct-1))) 
         else:
             print("Wrong answer! :(")
-        print("Your score is:",  score)
-    
+            image = pygame.image.load('cross.png')
+            image = pygame.transform.scale(image, (70, 70))
+            screen.blit(image, (120, 290 + 75*(guess-1))) 
+            image = pygame.image.load('arrow.png')
+            image = pygame.transform.scale(image, (70, 70))
+            screen.blit(image, (120, 290 + 75*(correct-1)))  
+        if counter == num_q_game:
+            print("Your score is:",  score)
+            done = True
+        end = False
+        waiting = True
+        
     pygame.display.flip()
 
+'''clear_with_title()
+text = font.render('Your score is ' + str(score), True, (0,0,0))
+screen.blit(text, (200,450))
+pygame.display.flip()
+
+time.sleep(5)'''
     
 pygame.quit()
 
