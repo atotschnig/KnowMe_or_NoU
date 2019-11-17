@@ -51,7 +51,8 @@ def check_answer(buttons):
 ################################################################################
 
 
-filename = input("Enter file name: ") + '.json'
+filename = "Questions.json"
+#filename = input("Enter file name: ") + '.json'
 
 # import questions from json file
 with open(filename) as json_file:
