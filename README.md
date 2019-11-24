@@ -1,7 +1,6 @@
 # KnowMe_or_NoU
 
 Project submission for BostonHacks 2019 
-Contributors: Agnes Totschnig, Saumyaa Verma, Sarah Santoso, Aria Rens, Julia Fowler
 
 We created a cute and simple game inspired by the newlyweds game to check how well friends know each other. 
 
